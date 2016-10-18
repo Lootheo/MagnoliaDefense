@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{0E8271C1-0372-A726-8313-6D342FA59023}") = "MagnoliaNew", "Assembly-CSharp.csproj", "{9720E49C-A03E-EB14-7083-48ED6028AC93}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9720E49C-A03E-EB14-7083-48ED6028AC93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9720E49C-A03E-EB14-7083-48ED6028AC93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9720E49C-A03E-EB14-7083-48ED6028AC93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9720E49C-A03E-EB14-7083-48ED6028AC93}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

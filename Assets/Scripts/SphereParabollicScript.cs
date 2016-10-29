@@ -42,4 +42,11 @@ public class SphereParabollicScript : MonoBehaviour {
 		bullet.transform.position = new Vector3 (bulletPos.x + Time.deltaTime*vx0, bulletPos.y + velocityY*Time.deltaTime, 0);
 		velocityY -= g*Time.deltaTime;
 	}
+
+	void OnTriggerEnter(Collider hit) {
+		if (hit.gameObject.tag == "Enemy") {
+			Destroy (hit.gameObject);
+			Destroy (this.gameObject);
+		}
+	}
 }

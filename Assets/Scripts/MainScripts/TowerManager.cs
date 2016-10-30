@@ -94,27 +94,10 @@ public class TowerManager : MonoBehaviour {
 		{
 			if (Input.GetMouseButtonDown (0)) 
 			{
-				isPressing = true;
-				for (int i = 0; i < guides.Length; i++) 
-				{
-					guides [i].SetActive (true);
-				}
-			}
-			if (Input.GetMouseButtonUp (0)) 
-			{
-				isPressing = false;
-				for (int i = 0; i < guides.Length; i++) 
-				{
-					guides [i].SetActive (false);
-				}
-				if (Time.time > CurrentCooldown) 
-				{
-					CallBullet ();
-					CurrentCooldown = Time.time + MaxCooldown;
-				}
-			}
-			if (isPressing) 
-			{
+//				for (int i = 0; i < guides.Length; i++) 
+//				{
+//					guides [i].SetActive (true);
+//				}
 				Vector3 pressPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 10.0f));
 				if(pressPoint.x > -3.0f)
 				{
@@ -135,8 +118,60 @@ public class TowerManager : MonoBehaviour {
 					float y1 = ShootPoint.position.y + vy0 * guideTime*i - 0.5f * g * Mathf.Pow((guideTime*i),2);
 					guides [i].transform.position = new Vector3 (x1, y1, 0);
 				}
+				if (Time.time > CurrentCooldown) 
+				{
+					CallBullet ();
+					CurrentCooldown = Time.time + MaxCooldown;
+				}
 			}
 		}
+//		if (canShot)
+//		{
+//			if (Input.GetMouseButtonDown (0)) 
+//			{
+//				isPressing = true;
+//				for (int i = 0; i < guides.Length; i++) 
+//				{
+//					guides [i].SetActive (true);
+//				}
+//			}
+//			if (Input.GetMouseButtonUp (0)) 
+//			{
+//				isPressing = false;
+//				for (int i = 0; i < guides.Length; i++) 
+//				{
+//					guides [i].SetActive (false);
+//				}
+//				if (Time.time > CurrentCooldown) 
+//				{
+//					CallBullet ();
+//					CurrentCooldown = Time.time + MaxCooldown;
+//				}
+//			}
+//			if (isPressing) 
+//			{
+//				Vector3 pressPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 10.0f));
+//				if(pressPoint.x > -3.0f)
+//				{
+//					target.position = new Vector3 (pressPoint.x,target.position.y, pressPoint.z);
+//				}
+//				x =  target.position.x- ShootPoint.position.x;
+//				y =  target.position.y- ShootPoint.position.y;
+//				//Esto establece que si estás más lejos el tiempo de la bala es mayor.
+//				time = minTime + ((maxTime - minTime) * (maxDistance/100.0f*x));
+//
+//
+//				vx0 = x/time;
+//				vy0 = (y/time)+(0.5f*g*(time));
+//				float guideTime = time / guides.Length;
+//				for (int i = 0; i < guides.Length; i++) 
+//				{
+//					float x1 =  ShootPoint.position.x + vx0 * guideTime*i ;
+//					float y1 = ShootPoint.position.y + vy0 * guideTime*i - 0.5f * g * Mathf.Pow((guideTime*i),2);
+//					guides [i].transform.position = new Vector3 (x1, y1, 0);
+//				}
+//			}
+//		}
 	}
 
 	public void RestoreBullet(GameObject _bullet)

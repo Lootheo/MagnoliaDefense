@@ -1,33 +1,44 @@
 ﻿[System.Serializable]
 public class PrincessInfo{
 	public int gold;
-	public int fireShot;
-	public int iceShot;
-	public int bombShot;
-	public int ally1;
-	public int ally2;
-	public int ally3;
+	public bool fireShot;
+	public bool iceShot;
+	public bool bombShot;
+	public bool ally1;
+	public bool ally2;
+	public bool ally3;
 	public int unlockedLevels;
-	public float BulletCooldown;
-	public float BulletSpeed;
-	public float BulletTravelTime;
-	public float CauldronDamage;
-	public float CauldronCooldown;
+	public int NormalBulletCooldown;
+	public int NormalBulletDamage;
+	public int FireBulletCooldown;
+	public int FireBulletDamage;
+	public int IceBulletCooldown;
+	public int IceBulletDamage;
+	public int BombBulletCooldown;
+	public int BombBulletDamage;
+	public int CauldronDamage;
+	public int CauldronCooldown;
 	public float PlayerHP;
 
 
-	public PrincessInfo () {
+	public PrincessInfo () 
+	{
 		this.gold = 0;
-		this.fireShot = 0;
-		this.iceShot = 0;
-		this.bombShot = 0;
-		this.ally1 = 0;
-		this.ally2 = 0;
-		this.ally3 = 0;
+		this.fireShot = false;
+		this.iceShot = false;
+		this.bombShot = false;
+		this.ally1 = false;
+		this.ally2 = false;
+		this.ally3 = false;
 		this.unlockedLevels = 0;
-		this.BulletCooldown = 0;
-		this.BulletSpeed = 0;
-		this.BulletTravelTime = 0;
+		this.NormalBulletDamage = 1;
+		this.NormalBulletCooldown = 1;
+		this.FireBulletDamage = 1;
+		this.FireBulletCooldown = 1;
+		this.IceBulletDamage = 1;
+		this.IceBulletCooldown = 1;
+		this.BombBulletDamage = 1;
+		this.BombBulletCooldown = 1;
 		this.CauldronDamage = 0;
 		this.CauldronCooldown = 0;
 		this.PlayerHP = 100;

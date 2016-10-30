@@ -23,16 +23,16 @@ public class InstantiatorSphereScript : MonoBehaviour {
 	void Start () {
 		target = GameObject.FindGameObjectWithTag ("Target");
 		guides = GameObject.FindGameObjectsWithTag ("Guide");
-		//StartCoroutine(InstantiateSphere());
-
 	}
 	IEnumerator InstantiateSphere(){
-		while(true){
+		while(true)
+		{
 			yield return new WaitForSeconds (2.0f);
 			Instantiate (sphere,new Vector3(startPos.transform.position.x,startPos.transform.position.y,0.0f),Quaternion.identity);
 		}
 	}
-	public void CallBullet(){
+	public void CallBullet()
+	{
 		Instantiate (sphere,new Vector3(startPos.transform.position.x,startPos.transform.position.y,0.0f),Quaternion.identity);
 	}
 	
@@ -49,7 +49,8 @@ public class InstantiatorSphereScript : MonoBehaviour {
 		vx0 = x/time;
 		vy0 = (y/time)+(0.5f*g*(time));
 		float guideTime = time / guides.Length;
-		for (int i = 0; i < guides.Length; i++) {
+		for (int i = 0; i < guides.Length; i++) 
+		{
 			float x1 =  startPos.transform.position.x + vx0 * guideTime*i ;
 			float y1 = startPos.transform.position.y + vy0 * guideTime*i - 0.5f * g * Mathf.Pow((guideTime*i),2);
 			guides [i].transform.position = new Vector3 (x1, y1, 0);

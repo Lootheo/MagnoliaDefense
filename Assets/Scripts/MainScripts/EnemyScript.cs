@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour {
 	public bool _isAttacking;
 	public bool _isAttackingTower;
 	public bool _isAttackingAlly;
+	public bool _canMove =true;
 	public GameObject _target;
 	public float _attackTime;
 	public float _nextAttack;
@@ -24,10 +25,10 @@ public class EnemyScript : MonoBehaviour {
 		Health = 100.0f;
 		speed = 1.0f;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		if (!_isAttacking)
+		if (!_isAttacking && _canMove)
 			transform.position = new Vector3 (transform.position.x - speed * Time.deltaTime, transform.position.y, 0.0f);
 		else 
 		{
@@ -35,8 +36,13 @@ public class EnemyScript : MonoBehaviour {
 			{
 				if (_isAttackingAlly) 
 				{
-					if (_ally != null)
+					if (_ally != null) {
 						_ally.TakeDamage (_attackDmg);
+						if (_ally == null || _ally.Health <=0) {
+							_isAttacking = false;
+							_canMove = true;
+						}
+					}
 					else 
 					{
 						_isAttacking = false;
@@ -74,6 +80,14 @@ public class EnemyScript : MonoBehaviour {
 			_tower.TakeDamage (_attackDmg);
 			ES.DestroyEnemy ();
 			Destroy (this.gameObject);
+		}
+		if (hit.tag == "Enemy") {
+			_canMove = false;
+		}
+	}
+	void OnTriggerExit(Collider other){
+		if (other.tag == "Enemy") {
+			_canMove = true;
 		}
 	}
 }

@@ -12,8 +12,10 @@ public class BulletScript : MonoBehaviour {
 	TowerManager tm;
 	public Transform myTrans;
 	public bool _isActive;
+	public enum BulletType {Basic, Flame, Ice, Bomb};
+	public BulletType _selectedType;
 
-	public void SetData(TowerManager _tm, Transform _point)
+	public void SetData(TowerManager _tm, Transform _point, int _sel, float _dmg)
 	{
 		_isActive = true;
 		tm = _tm;
@@ -23,6 +25,8 @@ public class BulletScript : MonoBehaviour {
 		vy0 = tm.vy0;
 		velocityY = vy0;
 		myTrans = this.transform;
+		_selectedType = (BulletType)_sel;
+		_damage = _dmg;
 	}
 
 	// Update is called once per frame
@@ -31,21 +35,71 @@ public class BulletScript : MonoBehaviour {
 		if (_isActive) 
 		{
 			myTrans.position = new Vector3 (myTrans.position.x + Time.deltaTime*vx0, myTrans.position.y + velocityY*Time.deltaTime, 0);
-			velocityY -= g*Time.deltaTime;
+			velocityY -= g * Time.deltaTime;
 		}
 	}
 
-	public int _damage;
+	public float _damage;
 	void OnTriggerEnter(Collider hit)
 	{
-		if (hit.transform.tag == "Enemy") 
+		switch (_selectedType) 
 		{
-			hit.SendMessage ("TakeDamage", (float)_damage);
-			tm.RestoreBullet (this.gameObject);
-		} 
-		else if (hit.transform.tag == "Floor") 
-		{
-			tm.RestoreBullet (this.gameObject);
+			case BulletType.Basic:
+				if (hit.transform.tag == "Enemy") 
+				{
+					hit.SendMessage ("TakeDamage", _damage);
+					tm.RestoreBullet (this.gameObject);
+				} 
+				else if (hit.transform.tag == "Floor") 
+				{
+					tm.RestoreBullet (this.gameObject);
+				}
+				break;
+			case BulletType.Flame:
+				if (hit.transform.tag == "Enemy") 
+				{
+					hit.SendMessage ("TakeDamage", _damage);
+				} 
+				else if (hit.transform.tag == "Floor") 
+				{
+					tm.RestoreBullet (this.gameObject);
+				}
+				break;
+			case BulletType.Ice:
+				if (hit.transform.tag == "Enemy") 
+				{
+					hit.SendMessage ("TakeDamage", _damage);
+				} 
+				else if (hit.transform.tag == "Floor") 
+				{
+					tm.RestoreBullet (this.gameObject);
+				}
+				break;
+			case BulletType.Bomb:
+				if (hit.transform.tag == "Enemy") 
+				{
+					hit.SendMessage ("TakeDamage", _damage);
+				} 
+				else if (hit.transform.tag == "Floor") 
+				{
+					tm.RestoreBullet (this.gameObject);
+				}
+				break;
 		}
+	}
+
+	void Blaze()
+	{
+		
+	}
+
+	void Freeze()
+	{
+		
+	}
+
+	void Detonate()
+	{
+		
 	}
 }

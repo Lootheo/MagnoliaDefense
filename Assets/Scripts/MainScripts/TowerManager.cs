@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class TowerManager : MonoBehaviour {
+	public GameObject[] _bullets;
 	public Image healthBar;
 	public float _health, maxHealth;
 	public Transform ShootPoint, AllySpawn;
@@ -27,18 +28,31 @@ public class TowerManager : MonoBehaviour {
 	float x1,x2,y1,y2;
 	public float MaxCooldown = 1.0f;
 	float CurrentCooldown = 0.0f;
+	int _selectedType;
 	// Use this for initialization
 	public GameObject[] guides;
 	public Transform target;
+	public PrincessInfo _info;
+
 	// Use this for initialization
 	void Start () 
 	{
+		_info = DataPrincess.Load ();
 		isPressing = false;
 		guides = new GameObject[10];
 		for (int i = 0; i < 10; i++) 
 		{
 			guides [i] = Instantiate (marker, ShootPoint.position, Quaternion.identity) as GameObject;
 			guides [i].transform.SetParent (ShootPoint);
+		}
+		DataSender _sender = GameObject.FindObjectOfType<DataSender>();
+		if (_sender != null) {
+			bullet = _bullets [_sender._bulletType];
+			_selectedType = _sender._bulletType;
+		} 
+		else 
+		{
+			bullet = _bullets [0];
 		}
 
 		//Assigning properties based on GameProperties script
@@ -49,6 +63,21 @@ public class TowerManager : MonoBehaviour {
 		minDistance = gps.bulletMinDistance;
 		maxDistance = gps.bulletMaxDistance;
 		MaxCooldown = gps.currentBulletCooldown;
+		switch (_selectedType) 
+		{
+			case 0:
+				MaxCooldown -= _info.NormalBulletCooldown * 0.1f;
+				break;
+			case 1:
+				MaxCooldown -= _info.FireBulletCooldown * 0.1f;
+				break;
+			case 2:
+				MaxCooldown -= _info.IceBulletCooldown * 0.1f;
+				break;
+			case 3:
+				MaxCooldown -= _info.BombBulletCooldown * 0.1f;
+				break;
+			}
 		maxHealth = gps.currentPlayerMaxHP;
 		_health = maxHealth;
 		x1 = -gps.bulletMinDistance;
@@ -84,7 +113,27 @@ public class TowerManager : MonoBehaviour {
 			_bullet.transform.SetParent (bulletParent);
 		}
 		BulletScript BS = _bullet.GetComponent<BulletScript> ();
-		BS.SetData (this, target);
+		if (BS == null) 
+		{
+			BS = _bullet.AddComponent<BulletScript> ();
+		}
+		float damage = 0;
+		switch (_selectedType) 
+		{
+			case 0:
+				damage = _info.NormalBulletDamage * 5.0f;
+				break;
+			case 1:
+				damage = _info.FireBulletDamage * 5.0f;
+				break;
+			case 2:
+				damage = _info.IceBulletDamage * 5.0f;
+				break;
+			case 3:
+				damage = _info.BombBulletDamage * 5.0f;
+				break;
+		}
+		BS.SetData (this, target, _selectedType, damage);
 		canShot = false;
 	}
 
@@ -94,14 +143,31 @@ public class TowerManager : MonoBehaviour {
 		{
 			if (Input.GetMouseButtonDown (0)) 
 			{
-//				for (int i = 0; i < guides.Length; i++) 
-//				{
-//					guides [i].SetActive (true);
-//				}
+				isPressing = true;
+				for (int i = 0; i < guides.Length; i++) 
+				{
+					guides [i].SetActive (true);
+				}
+			}
+			if (Input.GetMouseButtonUp (0)) 
+			{
+				isPressing = false;
+				for (int i = 0; i < guides.Length; i++) 
+				{
+					guides [i].SetActive (false);
+				}
+				if (Time.time > CurrentCooldown) 
+				{
+					CallBullet ();
+					CurrentCooldown = Time.time + MaxCooldown;
+				}
+			}
+			if (isPressing) 
+			{
 				Vector3 pressPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 10.0f));
 				if(pressPoint.x > -3.0f)
 				{
-					target.position = new Vector3 (pressPoint.x,target.position.y, pressPoint.z);
+					target.position = new Vector3 (pressPoint.x, pressPoint.y, pressPoint.z);
 				}
 				x =  target.position.x- ShootPoint.position.x;
 				y =  target.position.y- ShootPoint.position.y;
@@ -118,60 +184,8 @@ public class TowerManager : MonoBehaviour {
 					float y1 = ShootPoint.position.y + vy0 * guideTime*i - 0.5f * g * Mathf.Pow((guideTime*i),2);
 					guides [i].transform.position = new Vector3 (x1, y1, 0);
 				}
-				if (Time.time > CurrentCooldown) 
-				{
-					CallBullet ();
-					CurrentCooldown = Time.time + MaxCooldown;
-				}
 			}
 		}
-//		if (canShot)
-//		{
-//			if (Input.GetMouseButtonDown (0)) 
-//			{
-//				isPressing = true;
-//				for (int i = 0; i < guides.Length; i++) 
-//				{
-//					guides [i].SetActive (true);
-//				}
-//			}
-//			if (Input.GetMouseButtonUp (0)) 
-//			{
-//				isPressing = false;
-//				for (int i = 0; i < guides.Length; i++) 
-//				{
-//					guides [i].SetActive (false);
-//				}
-//				if (Time.time > CurrentCooldown) 
-//				{
-//					CallBullet ();
-//					CurrentCooldown = Time.time + MaxCooldown;
-//				}
-//			}
-//			if (isPressing) 
-//			{
-//				Vector3 pressPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 10.0f));
-//				if(pressPoint.x > -3.0f)
-//				{
-//					target.position = new Vector3 (pressPoint.x,target.position.y, pressPoint.z);
-//				}
-//				x =  target.position.x- ShootPoint.position.x;
-//				y =  target.position.y- ShootPoint.position.y;
-//				//Esto establece que si estás más lejos el tiempo de la bala es mayor.
-//				time = minTime + ((maxTime - minTime) * (maxDistance/100.0f*x));
-//
-//
-//				vx0 = x/time;
-//				vy0 = (y/time)+(0.5f*g*(time));
-//				float guideTime = time / guides.Length;
-//				for (int i = 0; i < guides.Length; i++) 
-//				{
-//					float x1 =  ShootPoint.position.x + vx0 * guideTime*i ;
-//					float y1 = ShootPoint.position.y + vy0 * guideTime*i - 0.5f * g * Mathf.Pow((guideTime*i),2);
-//					guides [i].transform.position = new Vector3 (x1, y1, 0);
-//				}
-//			}
-//		}
 	}
 
 	public void RestoreBullet(GameObject _bullet)

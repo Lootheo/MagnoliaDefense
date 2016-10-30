@@ -38,22 +38,12 @@ public class GamePropertiesScript : MonoBehaviour {
 	float currentPlayerHP;
 	int currentPlayerLevel;
 
+	//Added for bullet countdown
+	public float gravity = 9.81f;
+	public float bulletMinTime = 1.0f;
+	public float bulletMaxTime = 1.5f;
+	public float bulletMaxDistance = 12;
+	public float bulletMinDistance = 3;
 
 
-
-
-
-
-
-	// Use this for initialization
-	void Start () {
-	
-
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

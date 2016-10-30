@@ -7,12 +7,11 @@ public class PlayerProperties : MonoBehaviour {
 	class Player {
 		//Player Stats
 		string playerName;
-		int playerLevel;
 		float playerExperience;
 		int playerCoins;
 
 		//Levels Stats
-		int playerLevelsPassed;
+		int playerCurrentMaxLevel;
 
 	}
 	//UpgradeClass with enum

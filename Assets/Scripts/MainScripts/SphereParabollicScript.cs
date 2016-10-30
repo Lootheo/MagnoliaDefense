@@ -2,19 +2,13 @@
 using System.Collections;
 
 public class SphereParabollicScript : MonoBehaviour {
-	public float desiredX =30;
-	float x0;
-	float y0;
-	float vx0 = 3.0f;
-	float altura = 0.0f;
 	public Transform targetPoint;
-	public float Speed;
 	// Use this for initialization
-	float v;
-	float vy0;
 	float velocityY;
-	float g;
-	float x,y;
+
+	public float g;
+	float vx0;
+	float vy0;
 	TowerManager tm;
 	public Transform myTrans;
 

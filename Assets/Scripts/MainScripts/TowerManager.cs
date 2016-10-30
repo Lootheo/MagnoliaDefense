@@ -9,11 +9,12 @@ public class TowerManager : MonoBehaviour {
 	public float vy0;
 	public float x;
 	public float y;
-	public float g=9.81f;
-	public float time=1.2f;
-	public float minTime = 1.0f;
-	public float maxTime = 1.5f;
-	public float maxDistance = 12.0f;
+	public float g;
+	public float time;
+	public float minTime;
+	public float maxTime;
+	public float minDistance;
+	public float maxDistance;
 	public bool isPressing;
 	float x1,x2,y1,y2;
 	public float MaxCooldown = 1.0f;
@@ -32,7 +33,15 @@ public class TowerManager : MonoBehaviour {
 			guides [i] = Instantiate (marker, ShootPoint.position, Quaternion.identity) as GameObject;
 			guides [i].transform.SetParent (ShootPoint);
 		}
-		
+
+		//Assigning properties based on GameProperties script
+		GamePropertiesScript gps = new GamePropertiesScript ();
+		g = gps.gravity;
+		minTime = gps.bulletMinTime;
+		maxTime = gps.bulletMaxTime;
+		minDistance = gps.bulletMinDistance;
+		maxDistance = gps.bulletMaxDistance;
+
 	}
 
 

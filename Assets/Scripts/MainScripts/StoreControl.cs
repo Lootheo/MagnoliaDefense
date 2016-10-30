@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public class FrictionScript : MonoBehaviour {
-
+public class StoreControl : MonoBehaviour {
+	public PrincessInfo _info;
 	// Use this for initialization
 	void Start () {
-	
-	}
-
-	void OnCollisionEnter(Collision hit){
-		GetComponent<Rigidbody> ().isKinematic = true;
+		//DataPrincess.Delete ();
+		_info = DataPrincess.Load ();
 	}
 	
 	// Update is called once per frame

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GamePropertiesScript : MonoBehaviour {
-
+public class GamePropertiesScript
+{
 	//This Script handles the gameplay properties
 
 	//Bullet Properties (Start or Lvl1)
@@ -10,8 +10,8 @@ public class GamePropertiesScript : MonoBehaviour {
 	float startingBulletSpeed;
 
 	//Bullet Current Properties (Current)
-	float currentBulletCooldown;
-	float currentBulletSpeed;
+	public float currentBulletCooldown = 1.0f;
+	public float currentBulletSpeed;
 
 	//Bullet Properties (Limits)
 	float maxBulletCooldown;
@@ -33,7 +33,7 @@ public class GamePropertiesScript : MonoBehaviour {
 	int startingPlayerLevel = 1;
 
 	//Gameplay Properties (Current)
-	float currentPlayerMaxHP;
+	public float currentPlayerMaxHP = 100.0f;
 	float currentPlayerExperience;
 	float currentPlayerHP;
 	int currentPlayerLevel;
@@ -44,6 +44,4 @@ public class GamePropertiesScript : MonoBehaviour {
 	public float bulletMaxTime = 1.5f;
 	public float bulletMaxDistance = 12;
 	public float bulletMinDistance = 3;
-
-
 }

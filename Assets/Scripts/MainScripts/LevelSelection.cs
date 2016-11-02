@@ -11,13 +11,41 @@ public class LevelSelection : MonoBehaviour {
 	public Button[] _btnLevels;
 	public List<LevelData> levels = new List<LevelData> ();
 	public DataSender DS;
-	public Image[] _ammoImages;
+	public Button[] _ammoImages;
 	public int AmmoOption = 0;
 	public int LevelOption = 0;
+	public PrincessInfo pi;
 
 	void Start()
 	{
-		_ammoImages [0].color = Color.yellow;
+		pi = DataPrincess.Load();
+		for (int i = 0; i < _btnLevels.Length; i++) 
+		{
+			if (i <= pi.unlockedLevels) 
+			{
+				_btnLevels [i].interactable = true;
+			} 
+			else 
+			{
+				_btnLevels [i].interactable = false;
+			}
+		}
+		if (pi.fireShot) {
+			_ammoImages [1].interactable = true;
+		} else {
+			_ammoImages [1].interactable = false;
+		}
+		if (pi.iceShot) {
+			_ammoImages [2].interactable = true;
+		} else {
+			_ammoImages [2].interactable = false;
+		}
+		if (pi.bombShot) {
+			_ammoImages [3].interactable = true;
+		} else {
+			_ammoImages [3].interactable = false;
+		}
+		_ammoImages[0].GetComponent<Image>().color = Color.yellow;
 		_ammoSelect.SetActive (false);
 	}
 
@@ -26,9 +54,9 @@ public class LevelSelection : MonoBehaviour {
 		AmmoOption = _sel;
 		for (int i = 0; i < _ammoImages.Length; i++) 
 		{
-			_ammoImages [i].color = Color.white;
+			_ammoImages [i].GetComponent<Image>().color = Color.white;
 		}
-		_ammoImages [_sel].color = Color.yellow;
+		_ammoImages [_sel].GetComponent<Image>().color = Color.yellow;
 	}
 
 	public void SelectAmmo(int id)

@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class TowerManager : MonoBehaviour {
 	public GameObject[] _bullets;
+	public Transform CannonBody;
 	public Image healthBar;
+	public Button[] _allies;
 	public float _health, maxHealth;
 	public Transform ShootPoint, AllySpawn;
 	public GameObject bullet;
@@ -39,8 +41,8 @@ public class TowerManager : MonoBehaviour {
 	{
 		_info = DataPrincess.Load ();
 		isPressing = false;
-		guides = new GameObject[10];
-		for (int i = 0; i < 10; i++) 
+		guides = new GameObject[20];
+		for (int i = 0; i < 20; i++) 
 		{
 			guides [i] = Instantiate (marker, ShootPoint.position, Quaternion.identity) as GameObject;
 			guides [i].transform.SetParent (ShootPoint);
@@ -63,6 +65,23 @@ public class TowerManager : MonoBehaviour {
 		minDistance = gps.bulletMinDistance;
 		maxDistance = gps.bulletMaxDistance;
 		MaxCooldown = gps.currentBulletCooldown;
+		if (_info.ally1) {
+			_allies [0].gameObject.SetActive (true);
+		} else {
+			_allies [0].gameObject.SetActive (false);
+		}
+
+		if (_info.ally2) {
+			_allies [1].gameObject.SetActive (true);
+		} else {
+			_allies [1].gameObject.SetActive (false);
+		}
+
+		if (_info.ally3) {
+			_allies [2].gameObject.SetActive (true);
+		} else {
+			_allies [2].gameObject.SetActive (false);
+		}
 		switch (_selectedType) 
 		{
 			case 0:
@@ -78,9 +97,10 @@ public class TowerManager : MonoBehaviour {
 				MaxCooldown -= _info.BombBulletCooldown * 0.1f;
 				break;
 			}
-		maxHealth = gps.currentPlayerMaxHP;
+		maxHealth = gps.currentPlayerMaxHP + (_info.PlayerHP*10) -10;
 		_health = maxHealth;
 		x1 = -gps.bulletMinDistance;
+		target.gameObject.SetActive (false);
 	}
 
 	public void SpawnAlly(int _type)
@@ -117,20 +137,20 @@ public class TowerManager : MonoBehaviour {
 		{
 			BS = _bullet.AddComponent<BulletScript> ();
 		}
-		float damage = 0;
+		int damage = 0;
 		switch (_selectedType) 
 		{
 			case 0:
-				damage = _info.NormalBulletDamage * 5.0f;
+				damage = _info.NormalBulletDamage;
 				break;
 			case 1:
-				damage = _info.FireBulletDamage * 5.0f;
+				damage = _info.FireBulletDamage;
 				break;
 			case 2:
-				damage = _info.IceBulletDamage * 5.0f;
+				damage = _info.IceBulletDamage;
 				break;
 			case 3:
-				damage = _info.BombBulletDamage * 5.0f;
+				damage = _info.BombBulletDamage;
 				break;
 		}
 		BS.SetData (this, target, _selectedType, damage);
@@ -143,6 +163,7 @@ public class TowerManager : MonoBehaviour {
 		{
 			if (Input.GetMouseButtonDown (0)) 
 			{
+				target.gameObject.SetActive (true);
 				isPressing = true;
 				for (int i = 0; i < guides.Length; i++) 
 				{
@@ -151,6 +172,7 @@ public class TowerManager : MonoBehaviour {
 			}
 			if (Input.GetMouseButtonUp (0)) 
 			{
+				target.gameObject.SetActive (false);
 				isPressing = false;
 				for (int i = 0; i < guides.Length; i++) 
 				{
@@ -164,8 +186,8 @@ public class TowerManager : MonoBehaviour {
 			}
 			if (isPressing) 
 			{
-				Vector3 pressPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 10.0f));
-				if(pressPoint.x > -3.0f)
+				Vector3 pressPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 10.0f+ShootPoint.position.z));
+				if(pressPoint.x > -20.0f)
 				{
 					target.position = new Vector3 (pressPoint.x, pressPoint.y, pressPoint.z);
 				}
@@ -182,8 +204,9 @@ public class TowerManager : MonoBehaviour {
 				{
 					float x1 =  ShootPoint.position.x + vx0 * guideTime*i ;
 					float y1 = ShootPoint.position.y + vy0 * guideTime*i - 0.5f * g * Mathf.Pow((guideTime*i),2);
-					guides [i].transform.position = new Vector3 (x1, y1, 0);
+					guides [i].transform.position = new Vector3 (x1, y1, guides[i].transform.position.z);
 				}
+				CannonBody.LookAt (guides [1].transform);
 			}
 		}
 	}

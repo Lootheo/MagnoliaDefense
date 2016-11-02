@@ -8,17 +8,26 @@ public class StoreControl : MonoBehaviour {
 	public class StoreBomb
 	{
 		public Button unlockBtn;
-		public Image bombBgd;
-		public Text _unlockPrice;
 		public Button DmgBtn;
 		public Text dmgTxt;
 		public Button CoolBtn;
 		public Text coolTxt;
 	}
 
+	[System.Serializable]
+	public class StoreAlly
+	{
+		public Button UnlockBtn;
+		public Text UnlockTxt;
+	}
+
 	public Text GoldValue;
 	public PrincessInfo _info;
 	public StoreBomb[] _bombs;
+	public StoreAlly[] _allies;
+	public StoreBomb _caldero;
+	public Button HealthBtn;
+	public Text HealthTxt;
 	public int _fireUnlockPrice;
 	public int _iceUnlockPrice;
 	public int _bombUnlockPrice;
@@ -26,26 +35,37 @@ public class StoreControl : MonoBehaviour {
 	public int _fireUpgradeDmgPrice;
 	public int _iceUpgradeDmgPrice;
 	public int _bombUpgradeDmgPrice;
+	public int _CauldronUpgradeDmgPrice;
 	public int _normalUpgradeCoolPrice;
 	public int _fireUpgradeCoolPrice;
 	public int _iceUpgradeCoolPrice;
 	public int _bombUpgradeCoolPrice;
+	public int _CauldronUpgradeCoolPrice;
+	public int _HealthUpgradePrice;
+	public int _Ally1UnlockPrice;
+	public int _Ally2UnlockPrice;
+	public int _Ally3UnlockPrice;
 	// Use this for initialization
 	void Start () {
-		//DataPrincess.Delete ();
+		DataPrincess.Delete ();
 		_info = DataPrincess.Load ();
 		GoldValue.text = _info.gold.ToString();
+		_bombs [0].CoolBtn.gameObject.SetActive (true);
+		_bombs [0].DmgBtn.gameObject.SetActive (true);
+		_caldero.DmgBtn.gameObject.SetActive (true);
+		_caldero.CoolBtn.gameObject.SetActive (true);
+		HealthBtn.gameObject.SetActive (true);
 		Check ();
 		SetNewPrice (0);
 		SetNewPrice (1);
 		SetNewPrice (2);
 		SetNewPrice (3);
+		SetNewPrice (4);
+		SetNewPrice (5);
 	}
 
 	public void Check()
 	{
-		_bombs [0].CoolBtn.gameObject.SetActive (true);
-		_bombs [0].DmgBtn.gameObject.SetActive (true);
 		if(_info.gold<_normalUpgradeCoolPrice)
 			_bombs [0].CoolBtn.interactable = false;
 		else
@@ -56,6 +76,27 @@ public class StoreControl : MonoBehaviour {
 			_bombs [0].DmgBtn.interactable = true;
 
 
+		if(_info.gold<_HealthUpgradePrice)
+			HealthBtn.interactable = false;
+		else
+			HealthBtn.interactable = true;
+
+
+		if(_info.gold<_CauldronUpgradeCoolPrice)
+			_caldero.CoolBtn.interactable = false;
+		else
+			_caldero.CoolBtn.interactable = true;
+
+		if(_info.gold<_CauldronUpgradeCoolPrice)
+			_caldero.CoolBtn.interactable = false;
+		else
+			_caldero.CoolBtn.interactable = true;
+		if(_info.gold<_CauldronUpgradeDmgPrice)
+			_caldero.DmgBtn.interactable = false;
+		else
+			_caldero.DmgBtn.interactable = true;
+
+
 		if (!_info.fireShot) 
 		{
 			_bombs [1].unlockBtn.gameObject.SetActive (true);
@@ -64,7 +105,6 @@ public class StoreControl : MonoBehaviour {
 				_bombs [1].unlockBtn.interactable = false;
 				_bombs [1].CoolBtn.gameObject.SetActive (false);
 				_bombs [1].DmgBtn.gameObject.SetActive (false);
-
 			} 
 		}
 		else 
@@ -81,8 +121,6 @@ public class StoreControl : MonoBehaviour {
 			else
 				_bombs [1].DmgBtn.interactable = true;
 		}
-
-
 		if (!_info.iceShot) 
 		{
 			_bombs [2].unlockBtn.gameObject.SetActive (true);
@@ -117,7 +155,6 @@ public class StoreControl : MonoBehaviour {
 				_bombs [3].unlockBtn.interactable = false;
 				_bombs [3].CoolBtn.gameObject.SetActive (false);
 				_bombs [3].DmgBtn.gameObject.SetActive (false);
-
 			} 
 		}
 		else 
@@ -134,6 +171,73 @@ public class StoreControl : MonoBehaviour {
 			else
 				_bombs [3].DmgBtn.interactable = true;
 		}
+
+		if (!_info.ally1) 
+		{
+			if (_info.gold >= _Ally1UnlockPrice) {
+				_allies [0].UnlockBtn.interactable = true;
+			} else {
+				_allies [0].UnlockBtn.interactable = false;
+			}
+			_allies [0].UnlockTxt.text = "Desbloquear Aliado $" + _Ally1UnlockPrice;
+		} 
+		else 
+		{
+			_allies [0].UnlockBtn.interactable = false;
+			_allies [0].UnlockTxt.text = "Aliado Desbloqueado";
+		}
+		if (!_info.ally2) 
+		{
+			if (_info.gold >= _Ally2UnlockPrice) {
+				_allies [1].UnlockBtn.interactable = true;
+			} else {
+				_allies [1].UnlockBtn.interactable = false;
+			}
+			_allies [1].UnlockTxt.text = "Desbloquear Aliado $" + _Ally2UnlockPrice;
+		} 
+		else 
+		{
+			_allies [1].UnlockBtn.interactable = false;
+			_allies [1].UnlockTxt.text = "Aliado Desbloqueado";
+		}
+
+		if (!_info.ally3) 
+		{
+			if (_info.gold >= _Ally3UnlockPrice) 
+			{
+				_allies [2].UnlockBtn.interactable = true;
+			} else 
+			{
+				_allies [2].UnlockBtn.interactable = false;
+			}
+			_allies [2].UnlockTxt.text = "Desbloquear Aliado $" + _Ally3UnlockPrice;
+		} 
+		else 
+		{
+			_allies [2].UnlockBtn.interactable = false;
+			_allies [2].UnlockTxt.text = "Aliado Desbloqueado";
+		}
+	}
+
+	public void UnlockAlly(int _dex)
+	{
+		switch (_dex) 
+		{
+			case 0:
+				_info.ally1 = true;
+				_info.gold -= _Ally1UnlockPrice;
+				break;
+			case 1:
+				_info.ally2 = true;
+				_info.gold -= _Ally2UnlockPrice;
+				break;
+			case 2:
+				_info.ally3 = true;
+				_info.gold -= _Ally3UnlockPrice;
+				break;
+		}
+		GoldValue.text = _info.gold.ToString();
+		Check ();
 	}
 
 	public void SaveNewData()
@@ -170,6 +274,16 @@ public class StoreControl : MonoBehaviour {
 				_bombUpgradeDmgPrice = _info.BombBulletDamage * 10;
 				_bombs [3].dmgTxt.text = "Dmg Lvl " + (_info.BombBulletDamage+1) + " $" + _bombUpgradeDmgPrice;
 				break;
+			case 4:
+				_CauldronUpgradeCoolPrice = _info.CauldronCooldown * 10;
+				_caldero.coolTxt.text = "Cooldown Lvl " + (_info.CauldronCooldown+1) + " $" + _CauldronUpgradeCoolPrice;
+				_CauldronUpgradeDmgPrice = _info.CauldronDamage * 10;
+				_caldero.dmgTxt.text = "Dmg Lvl " + (_info.CauldronDamage+1) + " $" + _CauldronUpgradeDmgPrice;
+				break;
+			case 5:
+				_HealthUpgradePrice = _info.PlayerHP * 20;
+				HealthTxt.text = "Health Lvl " + (_info.PlayerHP + 1) + " $" + _HealthUpgradePrice;
+				break;
 		}
 	}
 	
@@ -194,6 +308,15 @@ public class StoreControl : MonoBehaviour {
 		Check ();
 	}
 
+	public void UpgradeHealth()
+	{
+		_info.PlayerHP++;
+		_info.gold -= _HealthUpgradePrice;
+		GoldValue.text = _info.gold.ToString();
+		SetNewPrice (5);
+		Check ();
+	}
+
 	public void UpgradeDamage(int _type)
 	{
 		switch (_type) 
@@ -213,6 +336,10 @@ public class StoreControl : MonoBehaviour {
 			case 3:
 				_info.BombBulletDamage++;
 				_info.gold -= _bombUpgradeDmgPrice;
+				break;
+			case 4:
+				_info.CauldronDamage++;
+				_info.gold -= _CauldronUpgradeDmgPrice;
 				break;
 		}
 		GoldValue.text = _info.gold.ToString();
@@ -239,6 +366,10 @@ public class StoreControl : MonoBehaviour {
 			case 3:
 				_info.BombBulletCooldown++;
 				_info.gold -= _bombUpgradeCoolPrice;
+				break;
+			case 4:
+				_info.CauldronCooldown++;
+				_info.gold -= _CauldronUpgradeCoolPrice;
 				break;
 		}
 		GoldValue.text = _info.gold.ToString();

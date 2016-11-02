@@ -4,7 +4,6 @@ using System.Collections;
 public class GamePropertiesScript
 {
 	//This Script handles the gameplay properties
-
 	//Bullet Properties (Start or Lvl1)
 	float startingBulletCooldown;
 	float startingBulletSpeed;

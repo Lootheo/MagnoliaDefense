@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour {
 	public Text enemies, waves, gold;
 	public Transform spawnPoint;
 	public Transform Canvas;
-	public GameObject enemy;
+	public GameObject[] enemy;
 	public List<GameObject> activeEnemys;
 	public int WaveLenght;
 	public int Waves;
@@ -44,7 +44,8 @@ public class EnemySpawner : MonoBehaviour {
 		for (int i = 0; i < WaveLenght; i++) 
 		{
 			CreateNewEnemy ();
-			yield return new WaitForSeconds(1.5f);
+			float _wait = Random.Range (3.0f, 5.0f);
+			yield return new WaitForSeconds(_wait);
 //			yield return new WaitForSeconds(enemyTime);
 		}
 	}
@@ -86,7 +87,8 @@ public class EnemySpawner : MonoBehaviour {
 
 	public void CreateNewEnemy()
 	{
-		GameObject _newEnemy = Instantiate (enemy, spawnPoint.position, spawnPoint.rotation) as GameObject;
+		int Rand = Random.Range (0, enemy.Length);
+		GameObject _newEnemy = Instantiate (enemy[Rand], spawnPoint.position, spawnPoint.rotation) as GameObject;
 		EnemyScript ES = _newEnemy.GetComponent<EnemyScript> ();
 		ES.ES = this;
 		_newEnemy.transform.localScale = new Vector3 (1, 1, 1);

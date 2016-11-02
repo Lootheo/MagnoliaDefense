@@ -9,7 +9,8 @@ public class DataSender : MonoBehaviour {
 	public bool _hasBoss;
 	public int _bulletType;
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		DontDestroyOnLoad (this);
 	}
 }

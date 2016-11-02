@@ -6,6 +6,7 @@ public class EnemyScript : MonoBehaviour {
 
 	public Image lifeBar;
 	public float Health = 100.0f;
+	float maxHealth;
 	public float speed = 1.0f;
 	public EnemySpawner ES;
 	public bool _isAttacking;
@@ -18,18 +19,22 @@ public class EnemyScript : MonoBehaviour {
 	public float _attackDmg;
 	AllyScript _ally;
 	TowerManager _tower;
+	public Renderer _rend;
+	public Color32 originalColor;
 	// Use this for initialization
 	void Start () {
+		maxHealth = Health;
+		originalColor = _rend.material.color;
 		_tower = FindObjectOfType<TowerManager> ();
 		_isAttacking = false;
-		Health = 100.0f;
-		speed = 1.0f;
+		//Health = 100.0f;
+		//speed = 1.0f;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (!_isAttacking && _canMove)
-			transform.position = new Vector3 (transform.position.x - speed * Time.deltaTime, transform.position.y, 0.0f);
+			transform.position = new Vector3 (transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
 		else 
 		{
 			if (Time.time > _nextAttack) 
@@ -57,12 +62,42 @@ public class EnemyScript : MonoBehaviour {
 	public void TakeDamage(float _damage)
 	{
 		Health -= _damage;
-		lifeBar.fillAmount = Health / 100.0f;
+		lifeBar.fillAmount = Health / maxHealth;
 		if(Health <= 0)
 		{
 			ES.DestroyEnemy ();
 			Destroy (gameObject);
 		}
+	}
+
+	public void Freeze(float _duration)
+	{
+		StartCoroutine (Frozen (_duration));
+	}
+
+	IEnumerator Frozen(float duration)
+	{
+		_canMove = false;
+		_rend.material.color = Color.blue;
+		yield return new WaitForSeconds (duration);
+		_rend.material.color = originalColor;
+		_canMove = true;
+	}
+
+	public void Burn(float _duration)
+	{
+		StartCoroutine (Burned (_duration));
+	}
+
+	IEnumerator Burned(float duration)
+	{
+		_rend.material.color = Color.red;
+		for (int i = 0; i < duration+2; i++) 
+		{
+			yield return new WaitForSeconds (2);
+			TakeDamage (duration * 5);
+		}
+		_rend.material.color = originalColor;
 	}
 
 
@@ -81,13 +116,13 @@ public class EnemyScript : MonoBehaviour {
 			ES.DestroyEnemy ();
 			Destroy (this.gameObject);
 		}
-		if (hit.tag == "Enemy") {
-			_canMove = false;
-		}
+//		if (hit.tag == "Enemy") {
+//			_canMove = false;
+//		}
 	}
-	void OnTriggerExit(Collider other){
-		if (other.tag == "Enemy") {
-			_canMove = true;
-		}
-	}
+//	void OnTriggerExit(Collider other){
+//		if (other.tag == "Enemy") {
+//			_canMove = true;
+//		}
+//	}
 }

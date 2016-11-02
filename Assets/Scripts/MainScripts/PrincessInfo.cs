@@ -18,7 +18,7 @@ public class PrincessInfo{
 	public int BombBulletDamage;
 	public int CauldronDamage;
 	public int CauldronCooldown;
-	public float PlayerHP;
+	public int PlayerHP;
 
 
 	public PrincessInfo () 
@@ -39,9 +39,9 @@ public class PrincessInfo{
 		this.IceBulletCooldown = 1;
 		this.BombBulletDamage = 1;
 		this.BombBulletCooldown = 1;
-		this.CauldronDamage = 0;
-		this.CauldronCooldown = 0;
-		this.PlayerHP = 100;
+		this.CauldronDamage = 1;
+		this.CauldronCooldown = 1;
+		this.PlayerHP = 1;
 	}
 }
 

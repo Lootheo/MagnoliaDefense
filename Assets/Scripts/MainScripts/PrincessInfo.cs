@@ -8,16 +8,16 @@ public class PrincessInfo{
 	public bool ally2;
 	public bool ally3;
 	public int unlockedLevels;
-	public int NormalBulletCooldown;
+	public float NormalBulletCooldown;
 	public int NormalBulletDamage;
-	public int FireBulletCooldown;
+	public float FireBulletCooldown;
 	public int FireBulletDamage;
-	public int IceBulletCooldown;
+	public float IceBulletCooldown;
 	public int IceBulletDamage;
-	public int BombBulletCooldown;
+	public float BombBulletCooldown;
 	public int BombBulletDamage;
 	public int CauldronDamage;
-	public int CauldronCooldown;
+	public float CauldronCooldown;
 	public int PlayerHP;
 
 
@@ -30,7 +30,7 @@ public class PrincessInfo{
 		this.ally1 = false;
 		this.ally2 = false;
 		this.ally3 = false;
-		this.unlockedLevels = 0;
+		this.unlockedLevels = 1;
 		this.NormalBulletDamage = 1;
 		this.NormalBulletCooldown = 1;
 		this.FireBulletDamage = 1;

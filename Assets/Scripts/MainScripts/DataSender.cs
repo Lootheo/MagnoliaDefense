@@ -8,6 +8,7 @@ public class DataSender : MonoBehaviour {
 	public float _waveTime;
 	public bool _hasBoss;
 	public int _bulletType;
+	public int level;
 	// Use this for initialization
 	void Start () 
 	{

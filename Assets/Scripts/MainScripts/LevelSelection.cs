@@ -21,7 +21,7 @@ public class LevelSelection : MonoBehaviour {
 		pi = DataPrincess.Load();
 		for (int i = 0; i < _btnLevels.Length; i++) 
 		{
-			if (i <= pi.unlockedLevels) 
+			if (i <= pi.unlockedLevels-1) 
 			{
 				_btnLevels [i].interactable = true;
 			} 
@@ -49,6 +49,7 @@ public class LevelSelection : MonoBehaviour {
 		_ammoSelect.SetActive (false);
 	}
 
+
 	public void SetSelected(int _sel)
 	{
 		AmmoOption = _sel;
@@ -68,11 +69,8 @@ public class LevelSelection : MonoBehaviour {
 	
 	public void SendData()
 	{
-		DS._waves = levels [LevelOption].Waves;
-		DS._enemysWave = levels [LevelOption].EnemysPerWave;
-		DS._enemyTime = levels [LevelOption].EnemyTime;
-		DS._waveTime = levels [LevelOption].WaveTime;
-		DS._bulletType = AmmoOption;
+		DS.level = LevelOption;
+		Debug.Log (DS.level);
 		SceneManager.LoadScene ("FinalScene");
 	}
 }

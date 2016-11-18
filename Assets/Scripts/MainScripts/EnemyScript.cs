@@ -20,15 +20,18 @@ public class EnemyScript : MonoBehaviour {
 	AllyScript _ally;
 	TowerManager _tower;
 	public Renderer _rend;
+	Material originalMaterial;
 	public Color32 originalColor;
+	public Material flashMaterial;
+
+
 	// Use this for initialization
 	void Start () {
 		maxHealth = Health;
+		originalMaterial = _rend.material;
 		originalColor = _rend.material.color;
 		_tower = FindObjectOfType<TowerManager> ();
 		_isAttacking = false;
-		//Health = 100.0f;
-		//speed = 1.0f;
 	}
 
 	// Update is called once per frame
@@ -58,16 +61,23 @@ public class EnemyScript : MonoBehaviour {
 			}
 		}
 	}
-
+	new WaitForSeconds damageTickWaitTime = new WaitForSeconds(0.1f);
 	public void TakeDamage(float _damage)
 	{
 		Health -= _damage;
 		lifeBar.fillAmount = Health / maxHealth;
-		if(Health <= 0)
-		{
+		if (Health <= 0) {
 			ES.DestroyEnemy ();
-			Destroy (gameObject);
+			Destroy (gameObject);					///This needs to be switched to pooling
+		} else {
+			_rend.material = flashMaterial;
+			StartCoroutine (damageTick ());
 		}
+	}
+
+	IEnumerator damageTick(){
+		yield return damageTickWaitTime;
+		_rend.material = originalMaterial;
 	}
 
 	public void Freeze(float _duration)

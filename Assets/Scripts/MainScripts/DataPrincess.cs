@@ -6,7 +6,26 @@ using System.IO;
 
 public static class DataPrincess{
 	//public static Achivements Names = new List<Achivements>();
-	
+	public static void Save(EnemyCreatorScript.GameLevels gameLevels ) {
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Open(Application.persistentDataPath + "/GameLevels.io", FileMode.Create);
+		bf.Serialize(file, gameLevels);
+		file.Close();
+	}
+
+	public static EnemyCreatorScript.GameLevels LoadGameLevels() {
+		if(File.Exists(Application.persistentDataPath + "/GameLevels.io")) {
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(Application.persistentDataPath + "/GameLevels.io", FileMode.Open);
+			EnemyCreatorScript.GameLevels cham = (EnemyCreatorScript.GameLevels)bf.Deserialize(file);
+			file.Close();
+			return cham;
+		}
+		else
+			return new EnemyCreatorScript.GameLevels();
+	}
+
+
 	public static void Save(PrincessInfo cham) {
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Open(Application.persistentDataPath + "/Princess.pd", FileMode.OpenOrCreate);

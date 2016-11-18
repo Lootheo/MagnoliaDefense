@@ -250,40 +250,40 @@ public class StoreControl : MonoBehaviour {
 	{
 		switch (_index) 
 		{
-			case 0:
-				_normalUpgradeCoolPrice = _info.NormalBulletCooldown * 10;
-				_bombs [0].coolTxt.text = "Cooldown Lvl " + (_info.NormalBulletCooldown+1) + " $" + _normalUpgradeCoolPrice;
-				_normalUpgradeDmgPrice = _info.NormalBulletDamage * 10;
-				_bombs [0].dmgTxt.text = "Dmg Lvl " + (_info.NormalBulletDamage+1) + " $" + _normalUpgradeDmgPrice;
-				break;
-			case 1:
-				_fireUpgradeCoolPrice = _info.FireBulletCooldown * 10;
-				_bombs [1].coolTxt.text = "Cooldown Lvl " + (_info.FireBulletCooldown+1) + " $" + _fireUpgradeCoolPrice;
-				_fireUpgradeDmgPrice = _info.FireBulletDamage * 10;
-				_bombs [1].dmgTxt.text = "Dmg Lvl " + (_info.FireBulletDamage+1) + " $" + _fireUpgradeDmgPrice;
-				break;
-			case 2:
-				_iceUpgradeCoolPrice = _info.IceBulletCooldown * 10;
-				_bombs [2].coolTxt.text = "Cooldown Lvl " + (_info.IceBulletCooldown+1) + " $" + _iceUpgradeCoolPrice;
-				_iceUpgradeDmgPrice = _info.IceBulletDamage * 10;
-				_bombs [2].dmgTxt.text = "Dmg Lvl " + (_info.IceBulletDamage+1) + " $" + _iceUpgradeDmgPrice;
-				break;
-			case 3:
-				_bombUpgradeCoolPrice = _info.BombBulletCooldown * 10;
-				_bombs [3].coolTxt.text = "Cooldown Lvl " + (_info.BombBulletCooldown+1) + " $" + _bombUpgradeCoolPrice;
-				_bombUpgradeDmgPrice = _info.BombBulletDamage * 10;
-				_bombs [3].dmgTxt.text = "Dmg Lvl " + (_info.BombBulletDamage+1) + " $" + _bombUpgradeDmgPrice;
-				break;
-			case 4:
-				_CauldronUpgradeCoolPrice = _info.CauldronCooldown * 10;
-				_caldero.coolTxt.text = "Cooldown Lvl " + (_info.CauldronCooldown+1) + " $" + _CauldronUpgradeCoolPrice;
-				_CauldronUpgradeDmgPrice = _info.CauldronDamage * 10;
-				_caldero.dmgTxt.text = "Dmg Lvl " + (_info.CauldronDamage+1) + " $" + _CauldronUpgradeDmgPrice;
-				break;
-			case 5:
-				_HealthUpgradePrice = _info.PlayerHP * 20;
-				HealthTxt.text = "Health Lvl " + (_info.PlayerHP + 1) + " $" + _HealthUpgradePrice;
-				break;
+//			case 0:
+//				_normalUpgradeCoolPrice = _info.NormalBulletCooldown * 10;
+//				_bombs [0].coolTxt.text = "Cooldown Lvl " + (_info.NormalBulletCooldown+1) + " $" + _normalUpgradeCoolPrice;
+//				_normalUpgradeDmgPrice = _info.NormalBulletDamage * 10;
+//				_bombs [0].dmgTxt.text = "Dmg Lvl " + (_info.NormalBulletDamage+1) + " $" + _normalUpgradeDmgPrice;
+//				break;
+//			case 1:
+//				_fireUpgradeCoolPrice = _info.FireBulletCooldown * 10;
+//				_bombs [1].coolTxt.text = "Cooldown Lvl " + (_info.FireBulletCooldown+1) + " $" + _fireUpgradeCoolPrice;
+//				_fireUpgradeDmgPrice = _info.FireBulletDamage * 10;
+//				_bombs [1].dmgTxt.text = "Dmg Lvl " + (_info.FireBulletDamage+1) + " $" + _fireUpgradeDmgPrice;
+//				break;
+//			case 2:
+//				_iceUpgradeCoolPrice = _info.IceBulletCooldown * 10;
+//				_bombs [2].coolTxt.text = "Cooldown Lvl " + (_info.IceBulletCooldown+1) + " $" + _iceUpgradeCoolPrice;
+//				_iceUpgradeDmgPrice = _info.IceBulletDamage * 10;
+//				_bombs [2].dmgTxt.text = "Dmg Lvl " + (_info.IceBulletDamage+1) + " $" + _iceUpgradeDmgPrice;
+//				break;
+//			case 3:
+//				_bombUpgradeCoolPrice = _info.BombBulletCooldown * 10;
+//				_bombs [3].coolTxt.text = "Cooldown Lvl " + (_info.BombBulletCooldown+1) + " $" + _bombUpgradeCoolPrice;
+//				_bombUpgradeDmgPrice = _info.BombBulletDamage * 10;
+//				_bombs [3].dmgTxt.text = "Dmg Lvl " + (_info.BombBulletDamage+1) + " $" + _bombUpgradeDmgPrice;
+//				break;
+//			case 4:
+//				_CauldronUpgradeCoolPrice = _info.CauldronCooldown * 10;
+//				_caldero.coolTxt.text = "Cooldown Lvl " + (_info.CauldronCooldown+1) + " $" + _CauldronUpgradeCoolPrice;
+//				_CauldronUpgradeDmgPrice = _info.CauldronDamage * 10;
+//				_caldero.dmgTxt.text = "Dmg Lvl " + (_info.CauldronDamage+1) + " $" + _CauldronUpgradeDmgPrice;
+//				break;
+//			case 5:
+//				_HealthUpgradePrice = _info.PlayerHP * 20;
+//				HealthTxt.text = "Health Lvl " + (_info.PlayerHP + 1) + " $" + _HealthUpgradePrice;
+//				break;
 		}
 	}
 	

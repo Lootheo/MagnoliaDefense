@@ -22,8 +22,8 @@ public class TowerManager : MonoBehaviour {
 	public float y;
 	public float g;
 	public float time;
-	public float minTime;
-	public float maxTime;
+	float minTime;
+	float maxTime;
 	public float minDistance;
 	public float maxDistance;
 	public bool isPressing, canShot;
@@ -57,8 +57,8 @@ public class TowerManager : MonoBehaviour {
 			bullet = _bullets [0];
 		}
 
-		//Assigning properties based on GameProperties script
-		GamePropertiesScript gps = new GamePropertiesScript ();
+
+		GamePropertiesScript gps = new GamePropertiesScript ();	//Assigning properties based on GameProperties script
 		g = gps.gravity;
 		minTime = gps.bulletMinTime;
 		maxTime = gps.bulletMaxTime;
@@ -103,6 +103,11 @@ public class TowerManager : MonoBehaviour {
 		target.gameObject.SetActive (false);
 	}
 
+
+	/// <summary>
+	/// Spawns the ally.
+	/// </summary>
+	/// <param name="_type">The type of ally to spawn.</param>
 	public void SpawnAlly(int _type)
 	{
 		GameObject ally = Instantiate (allies [_type], AllySpawn.position, Quaternion.identity) as GameObject;
@@ -111,14 +116,27 @@ public class TowerManager : MonoBehaviour {
 		AllyScript AS = ally.GetComponent<AllyScript> ();
 		AS.TM = this;
 	}
-
+	/// <summary>
+	/// Manages the tower damage intake
+	/// </summary>
+	/// <param name="_dmg">Dmg.</param>
 	public void TakeDamage(float _dmg)
 	{
 		_health -= _dmg;
 		Debug.Log (_health + " " + maxHealth);
+		if (_health <= 0) {
+			Loose ();
+		}
 		healthBar.fillAmount = _health / maxHealth;
 	}
 
+	public void Loose(){
+		Debug.Log ("Loose");
+	}
+
+	/// <summary>
+	/// Calls the bullet.
+	/// </summary>
 	public void CallBullet()
 	{
 		GameObject _bullet;
@@ -159,56 +177,32 @@ public class TowerManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (canShot)
-		{
-			if (Input.GetMouseButtonDown (0)) 
-			{
+
+			if (Input.GetMouseButton (0)) {
 				target.gameObject.SetActive (true);
 				isPressing = true;
-				for (int i = 0; i < guides.Length; i++) 
-				{
-					guides [i].SetActive (true);
-				}
-			}
-			if (Input.GetMouseButtonUp (0)) 
-			{
-				target.gameObject.SetActive (false);
-				isPressing = false;
-				for (int i = 0; i < guides.Length; i++) 
-				{
-					guides [i].SetActive (false);
-				}
-				if (Time.time > CurrentCooldown) 
-				{
-					CallBullet ();
-					CurrentCooldown = Time.time + MaxCooldown;
-				}
-			}
-			if (isPressing) 
-			{
-				Vector3 pressPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 10.0f+ShootPoint.position.z));
-				if(pressPoint.x > -20.0f)
-				{
-					target.position = new Vector3 (pressPoint.x, pressPoint.y, pressPoint.z);
-				}
+				target.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 10.0f+ShootPoint.position.z));
 				x =  target.position.x- ShootPoint.position.x;
 				y =  target.position.y- ShootPoint.position.y;
 				//Esto establece que si estás más lejos el tiempo de la bala es mayor.
-				time = minTime + ((maxTime - minTime) * (maxDistance/100.0f*x));
-
-
+				time = minTime+((maxTime - minTime) * ((maxDistance/100.0f)*(x/100.0f)));
 				vx0 = x/time;
 				vy0 = (y/time)+(0.5f*g*(time));
-				float guideTime = time / guides.Length;
-				for (int i = 0; i < guides.Length; i++) 
-				{
-					float x1 =  ShootPoint.position.x + vx0 * guideTime*i ;
-					float y1 = ShootPoint.position.y + vy0 * guideTime*i - 0.5f * g * Mathf.Pow((guideTime*i),2);
-					guides [i].transform.position = new Vector3 (x1, y1, guides[i].transform.position.z);
+				float guideTime = time / 5.0f;
+
+				float x1 =  ShootPoint.position.x + vx0 * guideTime*5.0f ;
+				float y1 = ShootPoint.position.y + vy0 * guideTime*5.0f - 0.5f * g * Mathf.Pow((guideTime*1.0f),2);
+				CannonBody.LookAt (new Vector3(x1,y1,CannonBody.transform.position.z));
+				if (Time.time > CurrentCooldown) {
+					CallBullet ();
+					CurrentCooldown = Time.time + MaxCooldown;
 				}
-				CannonBody.LookAt (guides [1].transform);
+//				
+				
+			} else {
+				target.gameObject.SetActive (false);
 			}
-		}
+
 	}
 
 	public void RestoreBullet(GameObject _bullet)

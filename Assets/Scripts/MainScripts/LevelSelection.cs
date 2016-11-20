@@ -9,7 +9,6 @@ public class LevelSelection : MonoBehaviour {
 
 	public GameObject _levelSelect, _ammoSelect;
 	public Button[] _btnLevels;
-	public List<LevelData> levels = new List<LevelData> ();
 	public DataSender DS;
 	public Button[] _ammoImages;
 	public int AmmoOption = 0;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TowerManager : MonoBehaviour {
 	public GameObject[] _bullets;
@@ -68,19 +69,19 @@ public class TowerManager : MonoBehaviour {
 		if (_info.ally1) {
 			_allies [0].gameObject.SetActive (true);
 		} else {
-			_allies [0].gameObject.SetActive (false);
+			//_allies [0].gameObject.SetActive (false);
 		}
 
 		if (_info.ally2) {
 			_allies [1].gameObject.SetActive (true);
 		} else {
-			_allies [1].gameObject.SetActive (false);
+			//_allies [1].gameObject.SetActive (false);
 		}
 
 		if (_info.ally3) {
 			_allies [2].gameObject.SetActive (true);
 		} else {
-			_allies [2].gameObject.SetActive (false);
+			//_allies [2].gameObject.SetActive (false);
 		}
 		switch (_selectedType) 
 		{
@@ -132,6 +133,8 @@ public class TowerManager : MonoBehaviour {
 
 	public void Loose(){
 		Debug.Log ("Loose");
+		SceneManager.LoadScene ("LooseScene");
+
 	}
 
 	/// <summary>

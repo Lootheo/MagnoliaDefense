@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour {
@@ -23,15 +24,14 @@ public class EnemySpawner : MonoBehaviour {
 	void Start () {
 		_info = DataPrincess.Load ();
 		gameLevels = DataPrincess.LoadGameLevels ();
-		//DataSender _sender = GameObject.FindObjectOfType<DataSender>();
-//		if (_sender != null) {
-//			currentLevel = gameLevels.FindLevel (_sender.level);
-//			Debug.Log ("Loading Level: " + _sender.level.ToString ());
-//		} else {
-//			currentLevel = gameLevels.FindLevel (1);
-//		}
-//
-		currentLevel = gameLevels.FindLevel (1);
+		DataSender _sender = GameObject.FindObjectOfType<DataSender>();
+		if (_sender != null) {
+			currentLevel = gameLevels.FindLevel (_sender.level);
+			Debug.Log ("Loading Level: " + _sender.level.ToString ());
+		} else {
+			currentLevel = gameLevels.FindLevel (1);
+		}
+
 		wavesText.text = waveNumber + "/" + currentLevel.numberOfWaves;
 
 		SpawnLevel (currentLevel);
@@ -84,8 +84,13 @@ public class EnemySpawner : MonoBehaviour {
 		totalLevelEnemies--;
 		enemiesText.text = totalLevelEnemies.ToString ();
 		Debug.Log ("Calling destroy" + totalLevelEnemies.ToString());
-		if (totalLevelEnemies == 0)
-			Debug.Log ("You won!");
+		if (totalLevelEnemies == 0) {
+			if (_info.unlockedLevels == currentLevel.levelNumber) {
+				_info.unlockedLevels++;
+			}
+			DataPrincess.Save (_info);
+			SceneManager.LoadScene ("VictoryLevel");
+		}
 	}
 
 	/// <summary>

@@ -30,6 +30,7 @@ public class EnemyCreatorScript : MonoBehaviour {
 					return level;
 				}
 			}
+			Debug.LogError ("Level Not Found");
 			return new Level ();
 		}
 

@@ -45,7 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\EnemyCreatorScript.cs" />
+     <Compile Include="Assets\Scripts\EnemyCreatorScript.cs" />
      <Compile Include="Assets\Scripts\EnemySpawnScript.cs" />
      <Compile Include="Assets\Scripts\GamePropertiesScript.cs" />
      <Compile Include="Assets\Scripts\InstantiatorSphereScript.cs" />
@@ -67,7 +67,7 @@
      <Compile Include="Assets\Scripts\TestUI.cs" />
      <Compile Include="Assets\Scripts\Unused\LaunchTests.cs" />
      <Compile Include="Assets\Scripts\UpdgradesScript.cs" />
-     <Compile Include="Assets\UpgradeCardSwitchScript.cs" />
+     <Compile Include="Assets\Scripts\UpgradeCardSwitchScript.cs" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
      <None Include="Assets\UETools\Readme.txt" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
